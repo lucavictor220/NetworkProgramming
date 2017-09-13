@@ -1,5 +1,5 @@
 # Ignore out folder
-**/out/
+**/target/
 
 # Ignore User specific stuff from .idea folder
 
