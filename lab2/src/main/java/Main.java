@@ -1,10 +1,14 @@
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
 import java.io.*;
+import java.util.List;
 import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -14,6 +18,9 @@ import java.util.zip.ZipOutputStream;
  * Created by vitiok on 8/29/17.
  */
 public class Main {
+
+    public Main() throws IOException {
+    }
 
     public static void main(String[] args) throws IOException {
 
@@ -72,9 +79,9 @@ public class Main {
 
             FileOutputStream fileOutputStream = new FileOutputStream("myfile.zip");
             ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
-            ZipEntry zipEntry = new ZipEntry("file.txt");
+            ZipEntry zipEntry = new ZipEntry("data/file.txt");
             zipOutputStream.putNextEntry(zipEntry);
-            FileInputStream fileInputStream = new FileInputStream("file.txt");
+            FileInputStream fileInputStream = new FileInputStream("data/file.txt");
 
             int len;
             while ((len = fileInputStream.read(buffer)) > 0) {
