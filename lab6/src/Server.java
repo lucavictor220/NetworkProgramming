@@ -7,23 +7,18 @@ import java.net.Socket;
  */
 public class Server {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String clientSentence;
+        boolean isStopped = false;
 
         ServerSocket serverSocket = new ServerSocket(4000);
-        System.out.println("Server is waiting for connection...");
-        Socket connectionSocket = serverSocket.accept();
-        InputStream socketInputStream = connectionSocket.getInputStream();
-        InputStreamReader socketInputStreamReader = new InputStreamReader(socketInputStream);
-        BufferedReader inFromClient = new BufferedReader(socketInputStreamReader);
-        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+        while (!isStopped) {
+            System.out.println("Server is waiting for connection...");
+            Socket connectionSocket = serverSocket.accept();
 
-        clientSentence = inFromClient.readLine();
+            new Thread(new Worker(connectionSocket)).start();
+        }
 
-        System.out.println("Received: " + clientSentence);
-        outToClient.writeBytes("Received, thx");
-
-        connectionSocket.close();
         serverSocket.close();
     }
 }
