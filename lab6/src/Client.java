@@ -22,7 +22,7 @@ public class Client {
         outToServer.writeBytes(message + '\n');
         messageFromServer = inFromServer.readLine();
 
-        System.out.println("Message from server: " + messageFromServer);
+        System.out.println("SERVER: " + messageFromServer);
 
         clientSocket.close();
     }

@@ -16,7 +16,7 @@ public class Server {
             System.out.println("Server is waiting for connection...");
             Socket connectionSocket = serverSocket.accept();
 
-            new Thread(new Worker(connectionSocket)).start();
+            new Thread(new Worker(connectionSocket, new PhoneServer())).start();
         }
 
         serverSocket.close();

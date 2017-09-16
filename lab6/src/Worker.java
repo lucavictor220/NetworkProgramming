@@ -7,24 +7,31 @@ import java.net.Socket;
 public class Worker implements Runnable {
 
     private Socket client;
+    private PhoneServer phoneServer;
 
-    public Worker(Socket client) {
+    public Worker(Socket client, PhoneServer phoneServer) {
         this.client = client;
+        this.phoneServer = phoneServer;
     }
 
     public void run() {
-        String clientSentence;
+        String clientMessage;
+        String serverResponse;
+
         try {
             InputStream socketInputStream = client.getInputStream();
             InputStreamReader socketInputStreamReader = new InputStreamReader(socketInputStream);
             BufferedReader inFromClient = new BufferedReader(socketInputStreamReader);
             DataOutputStream outToClient = new DataOutputStream(client.getOutputStream());
 
-            clientSentence = inFromClient.readLine();
-            Thread.sleep(10000);
+            clientMessage = inFromClient.readLine();
+            Thread.sleep(5000);
+            System.out.println(clientMessage);
+            serverResponse = phoneServer.processPhoneNumber(clientMessage);
+            System.out.println(serverResponse);
 
-            System.out.println("Received: " + clientSentence);
-            outToClient.writeBytes("Got it\n");
+            System.out.println("Received: " + serverResponse);
+            outToClient.writeBytes(serverResponse + '\n');
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
